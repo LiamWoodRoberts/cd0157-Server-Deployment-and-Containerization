@@ -33,6 +33,23 @@ At any time you can stop the app using the command:
 docker-compose stop
 ```
 
+# Testing Endpoint
+
+You can test the app once it has been deployed using its external endpoint. You can get this through AWS by running the following command:
+
+```
+kubectl get services simple-jwt-api -o wide
+```
+
+Extrenal IP: ad2e72c0b0ec34b79b5c0aeb675f43dd-465184208.us-east-2.elb.amazonaws.com
+
+Test Endpoint
+```
+export TOKEN=`curl -d '{"email":"wolf@thedoor.com","password":"huff-puff"}' -H "Content-Type: application/json" -X POST ad2e72c0b0ec34b79b5c0aeb675f43dd-465184208.us-east-2.elb.amazonaws.com/auth  | jq -r '.token'`
+curl --request GET 'ad2e72c0b0ec34b79b5c0aeb675f43dd-465184208.us-east-2.elb.amazonaws.com/contents' -H "Authorization: Bearer ${TOKEN}" | jq
+```
+
+
 # Deploying a Flask API
 
 This is the project starter repo for the course Server Deployment, Containerization, and Testing.
