@@ -1,0 +1,12 @@
+version: '3'
+
+services:  
+  web:
+    build: .
+    image: liamwr17/udacity-flask:latest
+    env_file:
+      - .env_file
+    volumes:
+      - .:/app
+    ports:
+      - 80:8080

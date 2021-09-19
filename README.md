@@ -1,3 +1,38 @@
+# Running the App Locally
+
+Local development is handled using docker and docker-compose.
+
+Build and run the image with the following commands:
+
+```
+docker-compose up -d --build
+```
+
+Ensure the app passes the required tests using the command:
+
+```
+docker-compose exec web python -m pytest
+```
+
+You can also test the endpoints manually with the following commands:
+
+Health Check
+```
+curl --request GET 'http://localhost:80/'
+```
+
+Auth + Contents
+```
+export TOKEN=`curl --data '{"email":"abc@xyz.com","password":"WindowsPwd"}' --header "Content-Type: application/json" -X POST localhost:80/auth  | jq -r '.token'`
+echo $TOKEN
+curl --request GET 'http://localhost:80/contents' -H "Authorization: Bearer ${TOKEN}" | jq .
+```
+
+At any time you can stop the app using the command:
+```
+docker-compose stop
+```
+
 # Deploying a Flask API
 
 This is the project starter repo for the course Server Deployment, Containerization, and Testing.
